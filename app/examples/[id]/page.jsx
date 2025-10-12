@@ -11,44 +11,40 @@ import {
   FaFileAlt,
   FaLightbulb
 } from 'react-icons/fa'
-import { BiWifi, BiBattery } from 'react-icons/bi'
-import { MdSignal } from 'react-icons/md'
-import { usePython } from 'react-py'
+
+import { usePyodideWithPackages } from '../../../hooks/usePyodideWithPackages'
 
 const ExampleDetail = () => {
   const params = useParams()
   const router = useRouter()
   const [activeTab, setActiveTab] = useState(0)
-  const [pythonOutput, setPythonOutput] = useState('')
-  const [pythonError, setPythonError] = useState('')
-  const [isRunning, setIsRunning] = useState(false)
   
-  // Try to use react-py, but provide fallback
-  let runPython, stdout, stderr, isLoading, isReady
-  try {
-    const pythonHook = usePython()
-    runPython = pythonHook.runPython
-    stdout = pythonHook.stdout
-    stderr = pythonHook.stderr
-    isLoading = pythonHook.isLoading
-    isReady = pythonHook.isReady
-  } catch (error) {
-    console.warn('React-py not available, using fallback')
-    isReady = true
-    isLoading = false
-  }
+  // Use our custom hook with proper package loading
+  const { 
+    runPython, 
+    stdout, 
+    stderr, 
+    isLoading, 
+    isReady, 
+    packagesLoaded, 
+    initError 
+  } = usePyodideWithPackages()
+  
+  // Debug react-py state
+  React.useEffect(() => {
+    console.log('React-py state:', { 
+      isReady, 
+      isLoading, 
+      packagesLoaded, 
+      initError,
+      hasRunPython: !!runPython 
+    })
+    if (initError) {
+      console.error('Pyodide initialization error:', initError)
+    }
+  }, [isReady, isLoading, packagesLoaded, initError, runPython])
 
-  // Example data - in a real app, this would come from an API or database
-  const exampleOrder = [
-    'hello-world',
-    'add-two-numbers', 
-    'square-root',
-    'area-of-triangle',
-    'swap-two-variables',
-    'quadratic-equation',
-    'kilometers-to-miles',
-    'celsius-to-fahrenheit'
-  ]
+  
 
   const examples = {
     'hello-world': {
@@ -554,44 +550,12 @@ Temperature conversion is essential in scientific applications, weather services
   const currentExample = examples[params.id] || examples['hello-world']
   
   const runCode = async () => {
-    if (runPython && isReady) {
+    if (isReady && runPython) {
       try {
-        setIsRunning(true)
         await runPython(currentExample.code)
       } catch (error) {
-        setPythonError(error.message)
-      } finally {
-        setIsRunning(false)
+        console.error('Error running Python code:', error)
       }
-    } else {
-      // Fallback simulation for when react-py is not available
-      setIsRunning(true)
-      setPythonOutput('')
-      setPythonError('')
-      
-      setTimeout(() => {
-        // Simulate code execution with expected output
-        if (params.id === 'hello-world') {
-          setPythonOutput('Hello, World!')
-        } else if (params.id === 'add-two-numbers') {
-          setPythonOutput('The sum of 10 and 20 is 30')
-        } else if (params.id === 'square-root') {
-          setPythonOutput('The square root of 16 is 4.0\nAlternative method: 4.0')
-        } else if (params.id === 'area-of-triangle') {
-          setPythonOutput('Area of triangle with base 10 and height 8 is 40.0\nArea using Heron\'s formula: 6.0')
-        } else if (params.id === 'swap-two-variables') {
-          setPythonOutput('Before swap: a = 10, b = 20\nAfter swap (temp method): a = 20, b = 10\nBefore swap: x = 100, y = 200\nAfter swap (tuple method): x = 200, y = 100\nBefore swap: p = 5, q = 15\nAfter swap (arithmetic method): p = 15, q = 5')
-        } else if (params.id === 'quadratic-equation') {
-          setPythonOutput('Quadratic equation: 1x² + -7x + 12 = 0\nDiscriminant: 1\nTwo real roots: 4.0 and 3.0')
-        } else if (params.id === 'kilometers-to-miles') {
-          setPythonOutput('10 kilometers = 6.21 miles\n50 km = 31.07 miles\n31.07 miles = 50.00 km\n\nBatch conversion:\n1 km = 0.62 miles\n5 km = 3.11 miles\n10 km = 6.21 miles\n25 km = 15.53 miles\n100 km = 62.14 miles')
-        } else if (params.id === 'celsius-to-fahrenheit') {
-          setPythonOutput('25°C = 77.0°F\n77°F = 25.0°C\n\nCommon temperature conversions:\n0°C = 32.0°F\n10°C = 50.0°F\n20°C = 68.0°F\n25°C = 77.0°F\n30°C = 86.0°F\n37°C = 98.6°F\n100°C = 212.0°F\n\nTemperature Converter\n1. Celsius to Fahrenheit\n2. Fahrenheit to Celsius\n30°C = 86.0°F')
-        } else {
-          setPythonOutput('Code executed successfully!')
-        }
-        setIsRunning(false)
-      }, 1000)
     }
   }
 
@@ -729,30 +693,30 @@ Temperature conversion is essential in scientific applications, weather services
               <div className="p-4">
                 <button
                   onClick={runCode}
-                  
+                  disabled={!isReady || isLoading}
                   className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-semibold flex items-center justify-center gap-2 hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <FaPlay className="text-sm" />
-                  {(isLoading || isRunning) ? 'Running...' : 'Run Code'}
+                  {isLoading ? 'Running...' : 'Run Code'}
                 </button>
                 
                 {/* Output */}
-                {((stdout || stderr) || (pythonOutput || pythonError)) && (
+                {(stdout || stderr) && (
                   <div className="mt-4">
                     <h4 className="font-semibold text-gray-700 mb-2">Output:</h4>
                     <div className="bg-black text-green-400 p-3 rounded-lg font-mono text-sm">
-                      {/* React-py output */}
                       {stdout && <div className="text-green-400">{stdout}</div>}
                       {stderr && <div className="text-red-400">{stderr}</div>}
-                      
-                      {/* Fallback output */}
-                      {pythonOutput && <div className="text-green-400">{pythonOutput}</div>}
-                      {pythonError && <div className="text-red-400">{pythonError}</div>}
                     </div>
                   </div>
                 )}
                 
-                
+                {!isReady && (
+                  <div className="mt-4 text-center text-gray-600">
+                    <div className="inline-block w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mr-2"></div>
+                    Loading Python environment...
+                  </div>
+                )}
               </div>
             </div>
           </div>
