@@ -700,21 +700,41 @@ Temperature conversion is essential in scientific applications, weather services
                   {isLoading ? 'Running...' : 'Run Code'}
                 </button>
                 
+                {/* Initialization Error */}
+                {initError && (
+                  <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                    <p className="text-red-600 text-sm">
+                      <strong>Package Loading Warning:</strong> {initError}
+                    </p>
+                    <p className="text-red-500 text-xs mt-1">
+                      Some advanced features may not work, but basic Python code should run fine.
+                    </p>
+                  </div>
+                )}
+                
                 {/* Output */}
                 {(stdout || stderr) && (
                   <div className="mt-4">
                     <h4 className="font-semibold text-gray-700 mb-2">Output:</h4>
                     <div className="bg-black text-green-400 p-3 rounded-lg font-mono text-sm">
-                      {stdout && <div className="text-green-400">{stdout}</div>}
-                      {stderr && <div className="text-red-400">{stderr}</div>}
+                      {stdout && <div className="text-green-400 whitespace-pre-wrap">{stdout}</div>}
+                      {stderr && <div className="text-red-400 whitespace-pre-wrap">{stderr}</div>}
                     </div>
                   </div>
                 )}
                 
+                {/* Loading States */}
                 {!isReady && (
                   <div className="mt-4 text-center text-gray-600">
                     <div className="inline-block w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mr-2"></div>
-                    Loading Python environment...
+                    {packagesLoaded ? 'Loading Python environment...' : 'Loading packages...'}
+                  </div>
+                )}
+                
+                {isReady && !packagesLoaded && (
+                  <div className="mt-4 text-center text-gray-600">
+                    <div className="inline-block w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mr-2"></div>
+                    Initializing Python packages...
                   </div>
                 )}
               </div>
