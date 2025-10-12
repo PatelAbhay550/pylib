@@ -22,17 +22,41 @@ export const usePyodideWithPackages = () => {
     const initializePackages = async () => {
       if (isReady && !packagesLoaded) {
         try {
-          // Load micropip first
+          // Try to load packages - first attempt with micropip
           await runPython(`
-import micropip
-await micropip.install("pyodide-http")
-print("Packages loaded successfully")
+try:
+    import micropip
+    print("micropip available")
+except ImportError:
+    print("micropip not available")
+
+# Try to import basic modules that should work
+import math
+import sys
+print("Basic Python modules loaded successfully")
+print(f"Python version: {sys.version}")
           `)
+          
+          // Try to load pyodide-http if available
+          try {
+            await runPython(`
+try:
+    import micropip
+    await micropip.install("pyodide-http")
+    print("pyodide-http installed successfully")
+except Exception as e:
+    print(f"pyodide-http installation failed: {e}")
+    print("Continuing without pyodide-http - basic Python functionality available")
+            `)
+          } catch (httpError) {
+            console.warn('pyodide-http loading failed, continuing with basic functionality:', httpError)
+          }
+          
           setPackagesLoaded(true)
           setInitError(null)
         } catch (error) {
-          console.error('Failed to load packages:', error)
-          setInitError(error.message)
+          console.error('Failed to initialize Python environment:', error)
+          setInitError('Package loading failed, but basic Python should work')
           // Set packages as loaded anyway to allow basic functionality
           setPackagesLoaded(true)
         }
