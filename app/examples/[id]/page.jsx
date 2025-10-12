@@ -39,6 +39,17 @@ const ExampleDetail = () => {
   }
 
   // Example data - in a real app, this would come from an API or database
+  const exampleOrder = [
+    'hello-world',
+    'add-two-numbers', 
+    'square-root',
+    'area-of-triangle',
+    'swap-two-variables',
+    'quadratic-equation',
+    'kilometers-to-miles',
+    'celsius-to-fahrenheit'
+  ]
+
   const examples = {
     'hello-world': {
       title: 'Hello World',
@@ -118,6 +129,425 @@ Variables in Python are like containers that hold data. You can name them anythi
 • Add error handling for invalid inputs
 • Perform multiple operations (subtract, multiply, divide)
 • Create a simple calculator function`
+    },
+    'square-root': {
+      title: 'Square Root',
+      code: `import math
+
+# Calculate square root of a number
+number = 16
+sqrt_result = math.sqrt(number)
+print(f"The square root of {number} is {sqrt_result}")
+
+# Alternative method without math module
+sqrt_alternative = number ** 0.5
+print(f"Alternative method: {sqrt_alternative}")`,
+      explanation: `This program demonstrates how to calculate the square root of a number in Python using both the math module and exponentiation.
+
+The program covers several important concepts:
+
+• **Math module**: Python's built-in mathematical functions library
+• **Import statements**: How to use external modules in your code
+• **Mathematical operations**: Using both library functions and operators
+• **Alternative approaches**: Different ways to solve the same problem
+
+The square root operation is fundamental in mathematics and programming, used in distance calculations, statistical analysis, and many algorithms.`,
+      summary: `This program shows two different methods to calculate square roots in Python.
+
+**Key Learning Points:**
+• **Math module usage**: Importing and using built-in mathematical functions
+• **math.sqrt() function**: Dedicated function for square root calculations
+• **Exponentiation operator (**)**: Using power operations (x**0.5 = √x)
+• **Module importing**: Understanding how to access external functionality
+
+**Mathematical Concepts:**
+• **Square root definition**: Finding a number that when multiplied by itself gives the original number
+• **Floating-point precision**: Understanding decimal accuracy in calculations
+• **Mathematical equivalence**: x**0.5 = √x
+
+**Real-world Applications:**
+• **Geometry**: Calculating distances, areas, and volumes
+• **Physics**: Velocity calculations, wave equations
+• **Statistics**: Standard deviation, variance calculations
+• **Computer graphics**: 3D transformations, lighting calculations
+
+**Best Practices:**
+• Use math.sqrt() for clarity and readability
+• Consider precision requirements for your specific use case
+• Handle negative numbers appropriately (they cause errors)`
+    },
+    'area-of-triangle': {
+      title: 'Area of Triangle',
+      code: `# Calculate area of triangle using base and height
+base = 10
+height = 8
+area = 0.5 * base * height
+print(f"Area of triangle with base {base} and height {height} is {area}")
+
+# Using Heron's formula for three sides
+import math
+a, b, c = 3, 4, 5  # Triangle sides
+s = (a + b + c) / 2  # Semi-perimeter
+area_heron = math.sqrt(s * (s - a) * (s - b) * (s - c))
+print(f"Area using Heron's formula: {area_heron}")`,
+      explanation: `This program demonstrates two different methods to calculate the area of a triangle: the basic formula using base and height, and Heron's formula using the three sides.
+
+The program illustrates:
+
+• **Basic geometry formulas**: Area = 0.5 × base × height
+• **Heron's formula**: Calculate area when you know all three sides
+• **Semi-perimeter calculation**: s = (a + b + c) / 2
+• **Complex mathematical expressions**: Breaking down formulas into steps
+
+Both methods are useful in different scenarios depending on what triangle measurements you have available.`,
+      summary: `This program teaches two fundamental approaches to calculating triangle areas.
+
+**Method 1 - Base and Height:**
+• **Formula**: Area = 0.5 × base × height
+• **When to use**: When you have perpendicular base and height measurements
+• **Simplicity**: Most straightforward calculation method
+
+**Method 2 - Heron's Formula:**
+• **Formula**: Area = √(s(s-a)(s-b)(s-c)) where s = (a+b+c)/2
+• **When to use**: When you know all three side lengths
+• **Complexity**: More complex but works with any triangle
+
+**Mathematical Concepts:**
+• **Semi-perimeter**: Half the perimeter of the triangle
+• **Square root operations**: Using math.sqrt() for complex calculations
+• **Variable assignment**: Storing intermediate calculations
+
+**Practical Applications:**
+• **Construction**: Calculating material needed for triangular structures
+• **Land surveying**: Determining area of triangular plots
+• **Computer graphics**: Triangle rendering and collision detection
+• **Engineering**: Structural analysis and design
+
+**Programming Techniques:**
+• **Multiple assignment**: a, b, c = 3, 4, 5
+• **Mathematical precision**: Handling floating-point calculations
+• **Code organization**: Breaking complex formulas into readable steps`
+    },
+    'swap-two-variables': {
+      title: 'Swap Two Variables',
+      code: `# Method 1: Using a temporary variable
+a = 10
+b = 20
+print(f"Before swap: a = {a}, b = {b}")
+
+temp = a
+a = b
+b = temp
+print(f"After swap (temp method): a = {a}, b = {b}")
+
+# Method 2: Pythonic tuple unpacking
+x = 100
+y = 200
+print(f"Before swap: x = {x}, y = {y}")
+
+x, y = y, x
+print(f"After swap (tuple method): x = {x}, y = {y}")
+
+# Method 3: Arithmetic method (for numbers only)
+p = 5
+q = 15
+print(f"Before swap: p = {p}, q = {q}")
+
+p = p + q
+q = p - q
+p = p - q
+print(f"After swap (arithmetic method): p = {p}, q = {q}")`,
+      explanation: `This program demonstrates three different methods to swap the values of two variables in Python. Variable swapping is a fundamental programming concept used in sorting algorithms, data manipulation, and many other scenarios.
+
+The three methods shown are:
+
+• **Temporary variable method**: Traditional approach using an extra variable
+• **Tuple unpacking**: Pythonic and elegant approach
+• **Arithmetic method**: Mathematical approach without extra variables
+
+Each method has its advantages and use cases depending on the programming context and requirements.`,
+      summary: `This program explores three different approaches to swapping variable values.
+
+**Method 1 - Temporary Variable:**
+• **Concept**: Use a third variable to hold one value temporarily
+• **Steps**: temp = a; a = b; b = temp
+• **Pros**: Clear, works with any data type, easy to understand
+• **Cons**: Requires extra memory for temporary variable
+
+**Method 2 - Tuple Unpacking (Recommended):**
+• **Concept**: Python's elegant multiple assignment feature
+• **Syntax**: x, y = y, x
+• **Pros**: Pythonic, concise, readable, works with any data type
+• **Cons**: Python-specific syntax
+
+**Method 3 - Arithmetic Method:**
+• **Concept**: Mathematical operations without extra variables
+• **Steps**: a = a + b; b = a - b; a = a - b
+• **Pros**: No extra memory needed
+• **Cons**: Only works with numbers, risk of overflow
+
+**Programming Concepts:**
+• **Multiple assignment**: Assigning values to multiple variables simultaneously
+• **Tuple creation**: Understanding implicit tuple creation in Python
+• **Memory efficiency**: Different approaches use memory differently
+
+**Real-world Applications:**
+• **Sorting algorithms**: Bubble sort, quick sort implementations
+• **Data structure manipulation**: Reorganizing arrays and lists
+• **Game development**: Position swapping, turn-based mechanics
+• **Algorithm optimization**: In-place operations
+
+**Best Practice:**
+Use tuple unpacking (x, y = y, x) as it's the most Pythonic and readable approach.`
+    },
+    'quadratic-equation': {
+      title: 'Find Roots of Quadratic Equation',
+      code: `import math
+
+# Quadratic equation: ax² + bx + c = 0
+a = 1
+b = -7
+c = 12
+
+print(f"Quadratic equation: {a}x² + {b}x + {c} = 0")
+
+# Calculate discriminant
+discriminant = b**2 - 4*a*c
+print(f"Discriminant: {discriminant}")
+
+if discriminant > 0:
+    # Two real and different roots
+    root1 = (-b + math.sqrt(discriminant)) / (2*a)
+    root2 = (-b - math.sqrt(discriminant)) / (2*a)
+    print(f"Two real roots: {root1} and {root2}")
+elif discriminant == 0:
+    # One real root (repeated)
+    root = -b / (2*a)
+    print(f"One real root: {root}")
+else:
+    # Complex roots
+    real_part = -b / (2*a)
+    imaginary_part = math.sqrt(abs(discriminant)) / (2*a)
+    print(f"Complex roots: {real_part} + {imaginary_part}i and {real_part} - {imaginary_part}i")`,
+      explanation: `This program solves quadratic equations using the quadratic formula. A quadratic equation has the form ax² + bx + c = 0, and the program handles all possible cases based on the discriminant.
+
+The program demonstrates:
+
+• **Quadratic formula**: x = (-b ± √(b² - 4ac)) / 2a
+• **Discriminant calculation**: b² - 4ac determines the nature of roots
+• **Conditional logic**: Different cases based on discriminant value
+• **Complex number handling**: When discriminant is negative
+
+This is a fundamental algebraic concept with many applications in mathematics, physics, and engineering.`,
+      summary: `This program implements the complete solution for quadratic equations with all possible cases.
+
+**Quadratic Formula Components:**
+• **Standard form**: ax² + bx + c = 0
+• **Discriminant**: Δ = b² - 4ac
+• **Formula**: x = (-b ± √Δ) / 2a
+
+**Three Cases Based on Discriminant:**
+• **Δ > 0**: Two real and different roots
+• **Δ = 0**: One real root (repeated root)
+• **Δ < 0**: Two complex conjugate roots
+
+**Mathematical Concepts:**
+• **Square root calculations**: Using math.sqrt() for real roots
+• **Complex numbers**: Handling imaginary parts when discriminant is negative
+• **Conditional logic**: Making decisions based on mathematical conditions
+
+**Programming Techniques:**
+• **Variable naming**: Clear coefficient names (a, b, c)
+• **Intermediate calculations**: Storing discriminant for reuse
+• **Formatted output**: Clear presentation of results
+• **Error handling**: Managing different mathematical scenarios
+
+**Real-world Applications:**
+• **Physics**: Projectile motion, wave equations
+• **Engineering**: Circuit analysis, structural calculations
+• **Economics**: Optimization problems, cost analysis
+• **Computer graphics**: Curve intersections, trajectory calculations
+
+**Educational Value:**
+This example combines mathematical theory with programming logic, showing how to implement mathematical formulas and handle edge cases programmatically.`
+    },
+    'kilometers-to-miles': {
+      title: 'Convert Kilometers to Miles',
+      code: `# Conversion factor: 1 kilometer = 0.621371 miles
+MILE_CONVERSION_FACTOR = 0.621371
+
+# Convert kilometers to miles
+kilometers = 10
+miles = kilometers * MILE_CONVERSION_FACTOR
+print(f"{kilometers} kilometers = {miles:.2f} miles")
+
+# Function for reusable conversion
+def km_to_miles(km):
+    """Convert kilometers to miles"""
+    return km * MILE_CONVERSION_FACTOR
+
+def miles_to_km(miles):
+    """Convert miles to kilometers"""
+    return miles / MILE_CONVERSION_FACTOR
+
+# Test the functions
+test_km = 50
+test_miles = 31.07
+
+print(f"{test_km} km = {km_to_miles(test_km):.2f} miles")
+print(f"{test_miles} miles = {miles_to_km(test_miles):.2f} km")
+
+# Batch conversion
+distances_km = [1, 5, 10, 25, 100]
+print("\\nBatch conversion:")
+for km in distances_km:
+    print(f"{km} km = {km_to_miles(km):.2f} miles")`,
+      explanation: `This program demonstrates unit conversion between kilometers and miles, introducing concepts like constants, functions, and batch processing.
+
+Key programming concepts covered:
+
+• **Constants**: Using uppercase naming for conversion factors
+• **Function definition**: Creating reusable conversion functions
+• **Docstrings**: Documenting function purposes
+• **Round formatting**: Using :.2f for decimal precision
+• **Loops**: Processing multiple values efficiently
+• **Bidirectional conversion**: Converting both ways
+
+Unit conversion is a fundamental programming task used in scientific calculations, international applications, and data processing.`,
+      summary: `This program teaches unit conversion programming with functions and constants.
+
+**Conversion Mathematics:**
+• **Conversion factor**: 1 kilometer = 0.621371 miles
+• **Forward conversion**: miles = kilometers × 0.621371
+• **Reverse conversion**: kilometers = miles ÷ 0.621371
+
+**Programming Best Practices:**
+• **Constants**: Using UPPERCASE for unchanging values
+• **Function design**: Single-responsibility functions
+• **Documentation**: Clear docstrings for function purposes
+• **DRY principle**: Don't repeat yourself - use functions
+
+**Key Features Demonstrated:**
+• **Precision control**: .2f format for two decimal places
+• **Bidirectional conversion**: Both km→miles and miles→km
+• **Batch processing**: Converting multiple values in a loop
+• **Function reusability**: Write once, use many times
+
+**Real-world Applications:**
+• **Travel planning**: Distance calculations for international trips
+• **Sports tracking**: Converting running/cycling distances
+• **Mapping applications**: Supporting multiple unit systems
+• **Scientific research**: Data standardization across regions
+• **International business**: Global measurement compatibility
+
+**Programming Concepts:**
+• **Function parameters**: Accepting input values
+• **Return values**: Sending results back to caller
+• **Loop iteration**: Processing lists of data
+• **String formatting**: Professional output presentation
+
+**Extension Ideas:**
+• Add input validation for negative numbers
+• Create a general conversion system for multiple units
+• Add temperature, weight, and volume conversions`
+    },
+    'celsius-to-fahrenheit': {
+      title: 'Convert Celsius to Fahrenheit',
+      code: `# Temperature conversion formulas:
+# Fahrenheit = (Celsius × 9/5) + 32
+# Celsius = (Fahrenheit - 32) × 5/9
+
+def celsius_to_fahrenheit(celsius):
+    """Convert Celsius to Fahrenheit"""
+    fahrenheit = (celsius * 9/5) + 32
+    return fahrenheit
+
+def fahrenheit_to_celsius(fahrenheit):
+    """Convert Fahrenheit to Celsius"""
+    celsius = (fahrenheit - 32) * 5/9
+    return celsius
+
+# Test conversions
+temp_c = 25
+temp_f = 77
+
+print(f"{temp_c}°C = {celsius_to_fahrenheit(temp_c):.1f}°F")
+print(f"{temp_f}°F = {fahrenheit_to_celsius(temp_f):.1f}°C")
+
+# Common temperature points
+print("\\nCommon temperature conversions:")
+common_temps = [0, 10, 20, 25, 30, 37, 100]
+
+for temp in common_temps:
+    f_temp = celsius_to_fahrenheit(temp)
+    print(f"{temp}°C = {f_temp:.1f}°F")
+
+# Interactive example
+def temperature_converter():
+    """Interactive temperature converter"""
+    print("\\nTemperature Converter")
+    print("1. Celsius to Fahrenheit")
+    print("2. Fahrenheit to Celsius")
+    
+    choice = 1  # Simulated user choice
+    temp_value = 30  # Simulated input
+    
+    if choice == 1:
+        result = celsius_to_fahrenheit(temp_value)
+        print(f"{temp_value}°C = {result:.1f}°F")
+    else:
+        result = fahrenheit_to_celsius(temp_value)
+        print(f"{temp_value}°F = {result:.1f}°C")
+
+temperature_converter()`,
+      explanation: `This program demonstrates temperature conversion between Celsius and Fahrenheit scales, showcasing mathematical formulas, function design, and practical applications.
+
+The program covers:
+
+• **Mathematical formulas**: Understanding the relationship between temperature scales
+• **Function encapsulation**: Wrapping conversion logic in reusable functions
+• **Bidirectional conversion**: Converting in both directions
+• **Common temperature points**: Showing familiar reference temperatures
+• **Interactive design**: Building user-friendly interfaces
+
+Temperature conversion is essential in scientific applications, weather services, cooking, and international communication.`,
+      summary: `This program provides comprehensive temperature conversion functionality.
+
+**Temperature Scale Formulas:**
+• **Celsius to Fahrenheit**: F = (C × 9/5) + 32
+• **Fahrenheit to Celsius**: C = (F - 32) × 5/9
+• **Key relationship**: 0°C = 32°F, 100°C = 212°F
+
+**Programming Features:**
+• **Function modularity**: Separate functions for each conversion direction
+• **Parameter passing**: Functions accept temperature values as arguments
+• **Return values**: Functions return converted temperatures
+• **Loop processing**: Batch conversion of multiple temperatures
+
+**Important Temperature References:**
+• **Freezing point of water**: 0°C = 32°F
+• **Room temperature**: ~20°C = 68°F
+• **Body temperature**: 37°C = 98.6°F
+• **Boiling point of water**: 100°C = 212°F
+
+**Real-world Applications:**
+• **Weather services**: International weather reporting
+• **Cooking**: Recipe temperature conversions
+• **Science**: Laboratory temperature standardization
+• **Travel**: Understanding local weather conditions
+• **HVAC systems**: Climate control programming
+
+**Programming Concepts:**
+• **Mathematical operations**: Proper order of operations
+• **Function documentation**: Using docstrings effectively
+• **User interface design**: Creating interactive programs
+• **Data validation**: Ensuring reasonable temperature ranges
+
+**Educational Benefits:**
+• **Mathematical application**: Real-world use of linear equations
+• **Function design**: Creating reusable, testable code
+• **User experience**: Building helpful, interactive tools
+• **International awareness**: Understanding global measurement systems`
     }
   }
 
@@ -145,6 +575,18 @@ Variables in Python are like containers that hold data. You can name them anythi
           setPythonOutput('Hello, World!')
         } else if (params.id === 'add-two-numbers') {
           setPythonOutput('The sum of 10 and 20 is 30')
+        } else if (params.id === 'square-root') {
+          setPythonOutput('The square root of 16 is 4.0\nAlternative method: 4.0')
+        } else if (params.id === 'area-of-triangle') {
+          setPythonOutput('Area of triangle with base 10 and height 8 is 40.0\nArea using Heron\'s formula: 6.0')
+        } else if (params.id === 'swap-two-variables') {
+          setPythonOutput('Before swap: a = 10, b = 20\nAfter swap (temp method): a = 20, b = 10\nBefore swap: x = 100, y = 200\nAfter swap (tuple method): x = 200, y = 100\nBefore swap: p = 5, q = 15\nAfter swap (arithmetic method): p = 15, q = 5')
+        } else if (params.id === 'quadratic-equation') {
+          setPythonOutput('Quadratic equation: 1x² + -7x + 12 = 0\nDiscriminant: 1\nTwo real roots: 4.0 and 3.0')
+        } else if (params.id === 'kilometers-to-miles') {
+          setPythonOutput('10 kilometers = 6.21 miles\n50 km = 31.07 miles\n31.07 miles = 50.00 km\n\nBatch conversion:\n1 km = 0.62 miles\n5 km = 3.11 miles\n10 km = 6.21 miles\n25 km = 15.53 miles\n100 km = 62.14 miles')
+        } else if (params.id === 'celsius-to-fahrenheit') {
+          setPythonOutput('25°C = 77.0°F\n77°F = 25.0°C\n\nCommon temperature conversions:\n0°C = 32.0°F\n10°C = 50.0°F\n20°C = 68.0°F\n25°C = 77.0°F\n30°C = 86.0°F\n37°C = 98.6°F\n100°C = 212.0°F\n\nTemperature Converter\n1. Celsius to Fahrenheit\n2. Fahrenheit to Celsius\n30°C = 86.0°F')
         } else {
           setPythonOutput('Code executed successfully!')
         }
@@ -158,6 +600,21 @@ Variables in Python are like containers that hold data. You can name them anythi
     { id: 1, label: 'Code', icon: FaCode },
     { id: 2, label: 'Summary', icon: FaFileAlt }
   ]
+
+  const handleNext = () => {
+    if (activeTab < tabs.length - 1) {
+      setActiveTab(activeTab + 1)
+    } else {
+      // If on last tab, go back to first tab or navigate to examples list
+      router.push('/examples')
+    }
+  }
+
+  const getNextButtonText = () => {
+    if (activeTab === 0) return 'View Code'
+    if (activeTab === 1) return 'View Summary' 
+    return 'Back to Examples'
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -188,6 +645,23 @@ Variables in Python are like containers that hold data. You can name them anythi
 
       {/* Tab Navigation */}
       <div className="bg-white border-b border-gray-200 sticky top-16 z-10">
+        {/* Progress indicator */}
+        <div className="px-6 py-2 bg-gray-50 border-b border-gray-100">
+          <div className="flex items-center justify-between text-sm text-gray-600">
+            <span>Step {activeTab + 1} of {tabs.length}</span>
+            <div className="flex gap-1">
+              {tabs.map((_, index) => (
+                <div
+                  key={index}
+                  className={`w-2 h-2 rounded-full transition-colors ${
+                    index <= activeTab ? 'bg-blue-600' : 'bg-gray-300'
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+        
         <div className="flex">
           {tabs.map((tab) => {
             const Icon = tab.icon
@@ -350,8 +824,20 @@ Variables in Python are like containers that hold data. You can name them anythi
 
       {/* Next Button */}
       <div className="fixed bottom-4 right-4">
-        <button className="bg-blue-600 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:bg-blue-700 transition-colors">
-          Next
+        <button 
+          onClick={handleNext}
+          className="bg-blue-600 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+        >
+          {getNextButtonText()}
+          {activeTab < tabs.length - 1 ? (
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          ) : (
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          )}
         </button>
       </div>
     </div>
