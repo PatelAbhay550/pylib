@@ -7,8 +7,10 @@ import {
   FaPlay
 } from 'react-icons/fa'
 import BottomNavigation from '../components/BottomNavigation'
+import { useAuth } from '../../contexts/AuthContext'
 
 const page = () => {
+  const { user } = useAuth()
   const newChallenges = [
     {
       id: 1,
@@ -137,7 +139,7 @@ const page = () => {
           <div className="flex items-center gap-3">
            
             <div className="bg-orange-100 px-3 py-2 rounded-full flex items-center gap-2">
-              <span className="text-orange-600 font-bold">00</span>
+              <span className="text-orange-600 font-bold">{user?.progress?.totalPoints || 0}</span>
               <div className="w-8 h-8 bg-orange-200 rounded-full flex items-center justify-center">
                 <FaUser className="text-orange-600 text-sm" />
               </div>
