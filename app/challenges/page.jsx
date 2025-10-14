@@ -1,39 +1,68 @@
 import React from 'react'
+import Link from 'next/link'
 import { 
   FaUser,
   FaBrain,
   FaLightbulb,
   FaPlay
 } from 'react-icons/fa'
-import { BiWifi, BiBattery } from 'react-icons/bi'
-import { MdSignal } from 'react-icons/md'
 import BottomNavigation from '../components/BottomNavigation'
 
 const page = () => {
   const newChallenges = [
     {
       id: 1,
+      title: "Print a Sentence",
+      points: 10,
+      icon: FaLightbulb,
+      difficulty: "beginner",
+      isPremium: true,
+      slug: "print-sentence"
+    },
+    {
+      id: 2,
+      title: "Take User Input and Print",
+      points: 15,
+      icon: FaUser,
+      difficulty: "beginner",
+      isPremium: true,
+      slug: "take-user-input"
+    },
+    {
+      id: 3,
+      title: "Meter to Centimeter",
+      points: 20,
+      icon: FaBrain,
+      difficulty: "beginner",
+      isPremium: true,
+      slug: "meter-to-centimeter"
+    },
+    {
+      id: 4,
+      title: "Profit Loss Calculator",
+      points: 25,
+      icon: FaBrain,
+      difficulty: "beginner",
+      isPremium: true,
+      slug: "profit-loss-calculator"
+    },
+    {
+      id: 5,
       title: "User Input to Create a List",
       points: 30,
       icon: FaBrain,
       difficulty: "beginner",
-      isPremium: true
+      isPremium: true,
+      slug: "user-input-list"
     },
     {
-      id: 2,
+      id: 6,
       title: "List Item Multiplication",
       points: 30,
       icon: FaBrain,
       difficulty: "beginner", 
-      isPremium: true
-    },
-    {
-      id: 3,
-      title: "Set Up",
-      points: 20,
-      icon: FaBrain,
-      difficulty: "beginner",
-      isPremium: true
+      isPremium: true,
+      slug: "list-multiplication"
     }
   ]
 
@@ -68,30 +97,32 @@ const page = () => {
     const Icon = challenge.icon
     
     return (
-      <div className="bg-white rounded-2xl p-4 shadow-sm">
-        <div className={`${bgColor} rounded-xl p-6 mb-4 relative`}>
-          {challenge.isPremium && (
-            <div className="absolute top-3 left-3 bg-purple-600 text-white px-3 py-1 rounded-full text-xs font-semibold">
-              Free
+      <Link href={challenge.slug ? `/challenges/${challenge.slug}` : '#'}>
+        <div className="bg-white rounded-2xl p-4 shadow-sm hover:shadow-md transition-shadow cursor-pointer">
+          <div className={`${bgColor} rounded-xl p-6 mb-4 relative`}>
+            {challenge.isPremium && (
+              <div className="absolute top-3 left-3 bg-purple-600 text-white px-3 py-1 rounded-full text-xs font-semibold">
+                Free
+              </div>
+            )}
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
+                <Icon className="text-2xl text-white" />
+              </div>
             </div>
-          )}
-          <div className="flex justify-center mb-4">
-            <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
-              <Icon className="text-2xl text-white" />
+          </div>
+          
+          <h3 className="font-semibold text-gray-800 text-sm mb-3 leading-tight">
+            {challenge.title}
+          </h3>
+          
+          <div className="flex justify-between items-center">
+            <div className="bg-orange-100 px-3 py-1 rounded-full">
+              <span className="text-orange-600 font-semibold text-sm">+{challenge.points}</span>
             </div>
           </div>
         </div>
-        
-        <h3 className="font-semibold text-gray-800 text-sm mb-3 leading-tight">
-          {challenge.title}
-        </h3>
-        
-        <div className="flex justify-between items-center">
-          <div className="bg-orange-100 px-3 py-1 rounded-full">
-            <span className="text-orange-600 font-semibold text-sm">+{challenge.points}</span>
-          </div>
-        </div>
-      </div>
+      </Link>
     )
   }
 
@@ -117,21 +148,23 @@ const page = () => {
 
       {/* Featured Challenge */}
       <div className="px-6 py-6">
-        <div className="bg-gradient-to-br from-purple-600 to-purple-400 rounded-2xl p-6 text-white relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-8 translate-x-8"></div>
-          <div className="absolute bottom-0 right-0 w-24 h-24 bg-white/10 rounded-full translate-y-4 translate-x-4"></div>
-          
-          <div className="relative z-10">
-            <p className="text-purple-100 text-sm mb-2">Start first challenge:</p>
-            <h2 className="text-2xl font-bold mb-6 leading-tight">
-              User Input to Create a List
-            </h2>
-            <button className="bg-white/20 backdrop-blur text-white px-8 py-3 rounded-xl font-semibold hover:bg-white/30 transition-colors flex items-center gap-2">
-              <FaPlay className="text-sm" />
-              Start
-            </button>
+        <Link href="/challenges/print-sentence">
+          <div className="bg-gradient-to-br from-purple-600 to-purple-400 rounded-2xl p-6 text-white relative overflow-hidden cursor-pointer hover:shadow-lg transition-shadow">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-8 translate-x-8"></div>
+            <div className="absolute bottom-0 right-0 w-24 h-24 bg-white/10 rounded-full translate-y-4 translate-x-4"></div>
+            
+            <div className="relative z-10">
+              <p className="text-purple-100 text-sm mb-2">Start first challenge:</p>
+              <h2 className="text-2xl font-bold mb-6 leading-tight">
+                Print a Sentence
+              </h2>
+              <div className="bg-white/20 backdrop-blur text-white px-8 py-3 rounded-xl font-semibold hover:bg-white/30 transition-colors flex items-center gap-2 w-fit">
+                <FaPlay className="text-sm" />
+                Start
+              </div>
+            </div>
           </div>
-        </div>
+        </Link>
       </div>
 
       {/* New Challenges */}
