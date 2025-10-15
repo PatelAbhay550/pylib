@@ -68,7 +68,7 @@ print("John Doe")
 print("Welcome to Python programming!")`,
       testCases: [
         {
-          expectedContains: ["Hello, Python!"]
+          expectedContains: ["Hello","World","Python"]
         }
       ]
     },
@@ -91,7 +91,7 @@ age = input("Enter your age: ")
 print(f"Hello {name}! You are {age} years old.")`,
       testCases: [
         {
-          expectedContains: ["Enter your name", "Enter your age", "Hello"]
+          expectedContains: ["Enter", "age", "Hello"]
         }
       ]
     },
